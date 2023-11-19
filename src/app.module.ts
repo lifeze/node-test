@@ -20,7 +20,7 @@ const [host, port] = MYSQL_ADDRESS.split(':');
       password: MYSQL_PASSWORD,
       database: 'nodejs_demo',
       entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true,
+      synchronize: false,
     }),
     AuthModule,
   ],
