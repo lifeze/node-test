@@ -9,6 +9,8 @@ COPY package*.json ./
  
 # 安装依赖
 RUN npm install
+
+RUN npm run build
  
 # 将项目文件复制到工作目录
 COPY . ./
