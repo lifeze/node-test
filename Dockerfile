@@ -11,10 +11,10 @@ COPY package*.json ./
 RUN npm install
  
 # 将项目文件复制到工作目录
-COPY . .
+COPY . ./
  
 # 暴露应用端口
-EXPOSE 3000
+# EXPOSE 3000
  
 # 运行 NestJS 应用
-CMD [ "npm", "run", "start:prod" ]
+CMD [ "node", "dist/main" ]
