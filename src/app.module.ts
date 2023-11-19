@@ -5,6 +5,9 @@ import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 
+// 从环境变量中读取数据库配置
+const { MYSQL_PASSWORD } = process.env;
+
 @Module({
   imports: [
     UserModule,
@@ -13,8 +16,8 @@ import { AuthModule } from './auth/auth.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'root',
-      database: 'node-demo',
+      password: MYSQL_PASSWORD,
+      database: 'nodejs_demo',
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
