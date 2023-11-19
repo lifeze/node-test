@@ -17,4 +17,4 @@ COPY . ./
 # EXPOSE 3000
  
 # 运行 NestJS 应用
-CMD [ "node", "dist/main" ]
+CMD [ "npm", "run", "start:prod" ]
