@@ -6,15 +6,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 
 // 从环境变量中读取数据库配置
-const { MYSQL_PASSWORD } = process.env;
+const { MYSQL_PASSWORD, MYSQL_ADDRESS = '' } = process.env;
+const [host, port] = MYSQL_ADDRESS.split(':');
 
 @Module({
   imports: [
     UserModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
+      host: host,
+      port: parseInt(port),
       username: 'root',
       password: MYSQL_PASSWORD,
       database: 'nodejs_demo',
