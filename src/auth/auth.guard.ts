@@ -7,17 +7,31 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { Request } from 'express';
+import { Reflector } from '@nestjs/core';
+import { IS_PUBLIC_KEY } from '../common/custom/annotate';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) {}
+  constructor(
+    private jwtService: JwtService,
+    private reflector: Reflector,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+    if (isPublic) {
+      console.log('~~~~不用登陆~~~');
+      return true;
+    }
+
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
       console.log('未登陆，，，，。。。');
-      throw new UnauthorizedException();
+      throw new UnauthorizedException(1007, '未登陆');
     }
     try {
       const payload = await this.jwtService.verifyAsync(token, {

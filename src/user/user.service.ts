@@ -39,7 +39,6 @@ export class UserService {
   }
 
   async updateUser(updateUserDto: UpdateUserDto) {
-    throw new HttpException('错误请求', 401);
     const qb = this.userRepository.createQueryBuilder();
     if (updateUserDto?.id) {
       return await qb
@@ -50,10 +49,11 @@ export class UserService {
         .where({ id: updateUserDto?.id })
         .execute();
     } else {
-      return {
-        code: 1007,
-        message: 'id no null',
-      };
+      throw new HttpException('id no null', 1007);
+      // return {
+      //   code: 1007,
+      //   message: 'id no null',
+      // };
     }
   }
 
