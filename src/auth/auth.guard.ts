@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
     if (!token) {
       console.log('未登陆，，，，。。。');
-      throw new UnauthorizedException(1007, '未登陆');
+      throw new UnauthorizedException('未登陆');
     }
     try {
       const payload = await this.jwtService.verifyAsync(token, {
