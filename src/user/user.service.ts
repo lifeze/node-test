@@ -21,19 +21,22 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     return await this.userRepository.find({ where: { id } });
   }
 
   async findOneByName(name: string): Promise<UserEntity> {
-    const temp = await this.userRepository.find({ where: { username: name } });
+    const temp = await this.userRepository.find({
+      where: { username: name },
+      // relations: ['roles'],
+    });
     if (temp && temp instanceof Array && temp.length >= 1) {
       return temp[0];
     }
     return new UserEntity();
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto) {
     const qb = this.userRepository.createQueryBuilder();
     return await qb.update().set(updateUserDto).where({ id }).execute();
   }
@@ -57,7 +60,7 @@ export class UserService {
     }
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const qb = this.userRepository.createQueryBuilder();
     return await qb.delete().where({ id }).execute();
   }

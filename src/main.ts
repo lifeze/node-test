@@ -10,6 +10,14 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   // 成功过滤
   app.useGlobalInterceptors(new TransformInterceptor());
+  app.enableCors({
+    origin: true,
+    methods: 'GET,PUT,POST',
+    allowedHeaders: 'Content-Type,Authorization',
+    exposedHeaders: 'Content-Range,X-Content-Range',
+    credentials: true,
+    maxAge: 3600,
+  });
   await app.listen(3000);
 }
 bootstrap();

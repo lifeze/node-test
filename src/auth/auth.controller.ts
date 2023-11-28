@@ -23,6 +23,11 @@ export class AuthController {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
 
+  @Get('/getUserInfo')
+  getUserInfo(@Request() request) {
+    return this.authService.getUserInfo(request.user.username);
+  }
+
   @UseGuards(AuthGuard)
   @Get('profile')
   getProflie(@Request() req) {
