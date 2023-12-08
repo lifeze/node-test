@@ -18,6 +18,7 @@ async function bootstrap() {
     credentials: true,
     maxAge: 3600,
   });
+  app.setGlobalPrefix('myNode');
   await app.listen(3000);
 }
 bootstrap();
